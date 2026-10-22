@@ -1,0 +1,29 @@
+{
+  "name": "Doom",
+  "version": "1.0.0",
+  "description": "The 1993 shooter on the keypad: the shareware episode, Knee-Deep in the Dead.",
+  "launch_path": "/index.html",
+  "type": "privileged",
+  "origin": "app://doom.hanzhe.dev",
+  "default_locale": "en-US",
+  "categories": ["games"],
+  "orientation": "portrait-primary",
+  "fullscreen": "true",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "icons": {
+    "56": "/icons/icon56x56.png",
+    "112": "/icons/icon112x112.png"
+  },
+  "developer": {
+    "name": "hanzhe"
+  },
+  "permissions": {},
+  "locales": {
+    "en-US": {
+      "name": "Doom",
+      "subtitle": "Knee-Deep in the Dead",
+      "description": "The shareware episode of Doom, on the keypad."
+    }
+  }
+}
