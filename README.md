@@ -12,7 +12,7 @@ bundled with the free shareware episode, *Knee-Deep in the Dead*.
 - The original 4:3 picture: 320x200 shown at 240x180, centred on the upright screen.
 - Always run is on to start, and you can switch it off.
 - Settings and saved games are kept between launches.
-- No sound yet.
+- Sound effects, panned left and right. No music yet.
 
 ## Keys
 
@@ -41,9 +41,11 @@ JavaScript (`WASM=0`, `LEGACY_VM_SUPPORT`) instead, as `app/js/doom.js`.
   - `DG_NONBLOCKING_WIPE`: the screen melt runs one step per frame. The original busy-wait
     loop would freeze the browser.
   - `DG_KEYPAD_PROMPTS`: prompts say "press ok or back".
-  - `I_Quit` also hands control back to the page.
+  - `I_Quit` also hands control back to the page, and `i_sound.c` skips SDL_mixer.
 - `port/doomgeneric_kaios.c`: the platform layer. It provides the key queue and weapon
   cycling, and runs the main loop only when a game tic is due.
+- `port/i_kaios_sound.c`: the sound module. It passes each sound's WAD lump to the page.
+- `app/js/sound.js`: decodes Doom's DMX sounds and plays them with Web Audio.
 - `app/js/keys.js`: maps phone keys to Doom keys.
 - `app/js/files.js`: copies the config and savegames to and from localStorage.
   IndexedDB never answers in sideloaded apps on the phone.

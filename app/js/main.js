@@ -8,6 +8,7 @@
   var SAVE_DIR = '/data';        // config and savegames, copied to localStorage
   var SAVE_KEY = 'doom.files';
   var SAVE_MS = 5000;
+  var QUIT_SOUND_MS = 1200;
   var HELP_SEEN = 'doom.helpSeen';
 
   var canvas = document.getElementById('screen');
@@ -19,6 +20,8 @@
   var running = false;
   var wakeLock = null;
   var savedText = null;          // what localStorage holds, to skip unchanged writes
+  var sound = DoomSound.createPlayer(window.AudioContext || window.mozAudioContext,
+    function () { return window.Module.HEAPU8; });
 
   function setStatus(text) { statusEl.textContent = text; }
 
@@ -143,11 +146,15 @@
       if (running) {
         M._kaios_pause();
         M._kaios_sleep(1);
+        sound.pause(true);
         writeSaves();
       }
     } else {
       keepAwake(true);
-      if (running) M._kaios_sleep(0);
+      if (running) {
+        M._kaios_sleep(0);
+        sound.pause(false);
+      }
     }
   }
 
@@ -165,6 +172,7 @@
     print: log,
     printErr: function (text) { console.warn('Doom: ' + text); },
     drawFrame: drawFrame,
+    sound: sound,
     onRuntimeInitialized: function () {
       log('started');
       running = true;
@@ -175,7 +183,7 @@
     onQuit: function () {
       running = false;
       writeSaves();
-      window.close();
+      setTimeout(function () { window.close(); }, QUIT_SOUND_MS);  // let the quit sound play
     },
     onAbort: function (what) { fail('Doom stopped: ' + what); }
   };

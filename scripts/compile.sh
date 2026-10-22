@@ -21,9 +21,9 @@ for f in $SRC; do FILES="$FILES doomgeneric/$f.c"; done
 docker run --rm -v "$PWD":/src -w /src -u "$(id -u):$(id -g)" "$EMSDK_IMAGE" \
   emcc -O2 -Idoomgeneric \
     -DDOOMGENERIC_RESX=320 -DDOOMGENERIC_RESY=200 \
-    -DDG_CANVAS_RGBA -DDG_NONBLOCKING_WIPE -DDG_KEYPAD_PROMPTS \
+    -DDG_CANVAS_RGBA -DDG_NONBLOCKING_WIPE -DDG_KEYPAD_PROMPTS -DFEATURE_SOUND \
     -Wno-everything \
-    $FILES port/doomgeneric_kaios.c \
+    $FILES port/doomgeneric_kaios.c port/i_kaios_sound.c \
     -sWASM=0 -sLEGACY_VM_SUPPORT=1 -sENVIRONMENT=web \
     -sINITIAL_MEMORY=33554432 -sSTACK_SIZE=1048576 \
     -sFORCE_FILESYSTEM=1 \
